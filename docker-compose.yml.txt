@@ -1,0 +1,24 @@
+version: "3.9"
+services:
+  frigate:
+    container_name: frigate
+    privileged: true
+    restart: unless-stopped
+    image: ghcr.io/blakeblackshear/frigate:stable
+    shm_size: "256mb"
+    devices:
+      - /dev/apex_0:dev/apex_0
+      - /dev/dri/renderD128 # for intel hwaccel, needs to be updated for your hardwa>
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /root/frigate/config:/config
+      - /root/frigate/storage:/media/frigate
+      - type: tmpfs # 1GB of memory
+        target: /tmp/cache
+        tmpfs:
+          size: 1000000000
+    ports:
+      - "5000:5000" # Port used by the Web UI
+      - "8554:8554" # RTSP feeds
+      - "8555:8555/tcp" # WebRTC over tcp
+      - "8555:8555/udp" # WebRTC over udp

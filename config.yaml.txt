@@ -1,0 +1,239 @@
+#  GNU nano 8.4                                                                                        config.yaml                                                                                                 
+mqtt:
+  enabled: false
+
+
+detectors:
+  coral:
+    type: edgetpu
+    device: pci
+
+# birdseye:
+#   enabled: true
+#   mode: continuous # motion,objects
+# birdseye:
+#   enabled: True
+#   restream: True
+#   quality: 1
+#   height: 1080
+#   width: 1920
+#   mode: continuous
+
+record:
+  enabled: true
+  alerts:
+    retain:
+      days: 20
+      mode: motion
+  detections:
+    retain:
+      days: 20
+      mode: motion
+  # sync_recordings: True
+
+  continuous:
+    days: 5
+  # motion:
+  #   days: 5
+# motion:
+#   threshold: 30
+  # contour_area: 10
+  # improve_contrast: true
+
+objects:
+  track:
+    - person
+    - car
+    - motorcycle
+    - bicycle
+
+snapshots:
+  enabled: true
+  crop: false
+  # retain:
+  #   days: 20
+  #   mode: all
+
+detect:
+  # width: 1280
+  # height: 720
+  fps: 5
+  enabled: true
+
+# ffmpeg:
+#   hwaccel_args: preset-vaapi
+#   output_args:
+#      record: -f segment -segment_time 10 -segment_format mp4 -reset_timestamps 1 -strftime 1 -c:v copy -c:a aac
+
+# ffmpeg:
+#   hwaccel_args:
+#     - -hwaccel
+#     - qsv
+#     - -qsv_device
+#     - /dev/dri/renderD128
+#   output_args:
+#     record: preset-record-generic-audio-aac
+ffmpeg: #4%
+  hwaccel_args:
+    - -hwaccel
+    - vaapi
+    - -hwaccel_device
+    - /dev/dri/renderD128
+  output_args:
+    record: preset-record-generic-audio-aac
+
+# ffmpeg:
+#   hwaccel_args: preset-vaapi
+# ffmpeg:
+#   hwaccel_args: preset-intel-qsv-h264
+  # output_args:
+  #   record: preset-record-generic-audio-aac
+
+# ffmpeg:
+#   hwaccel_args: preset-vaapi
+#   output_args:
+#     record: -f segment -segment_time 10 -segment_format mp4 -reset_timestamps 1 
+#       -strftime 1 -c:v copy -c:a aac
+
+# ffmpeg:
+#   input_args:
+#     - -avoid_negative_ts
+#     - make_zero
+#   output_args:
+#     record: -f segment -segment_time 10 -segment_format mp4 -reset_timestamps 1 
+#       -strftime 1 -c:v copy -c:a aac
+#   hwaccel_args:
+#     - -hwaccel
+#     - vaapi
+#     - -hwaccel_device
+#     - /dev/dri/renderD128
+#     - -hwaccel_output_format
+#     - yuv420p
+
+# cameras:
+#   la_poarta: # <--- this will be changed to your actual camera later
+#     ffmpeg:
+#       inputs:
+#         - path: rtsp://admin:123456@192.168.100.49:554/cam/realmonitor?channel=1&subtype=0
+#           roles:
+#             - record
+#             - detect
+#     onvif:
+#       host: 192.168.100.49
+#       port: 8899
+#       user: admin
+#       password: "123456"
+
+#   la_gard:
+#     ffmpeg:
+#       inputs:
+#         - path: rtsp://admin:123456@192.168.100.15:554/cam/realmonitor?channel=1&subtype=0
+#           roles:
+#             - record
+#             - detect
+#     onvif:
+#       host: 192.168.100.15
+#       port: 8899
+#       user: admin
+#       password: "123456"
+# go2rtc:
+#   streams:
+#     cam_la_poarta:
+#       - rtsp://admin:123456@192.168.100.49:554/stream1 # <- stream which supports video & aac audio.
+#     cam_la_gard:
+#       - rtsp://admin:123456@192.168.100.15:554/stream1 # <- stream which supports video & aac audio.
+
+# go2rtc:
+#   streams:
+#     cam_la_poarta:
+#       - rtsp://admin:123456@192.168.100.49:554/stream1 # <- stream which supports video & aac audio.
+#     cam_la_gard:
+#       - rtsp://admin:123456@192.168.100.15:554/stream1 # <- stream which supports video & aac audio.
+#     cam_la_poarta_sub:
+#       - rtsp://admin:123456@192.168.100.49:554/stream0 # <- stream which supports video & aac audio.
+#     cam_la_gard_sub:
+#       - rtsp://admin:123456@192.168.100.15:554/stream0 # <- stream which supports video & aac audio.
+
+#   webrtc:
+#     candidates:
+#       - stun:8555
+
+# cameras:
+#   la_poarta: # <--- this will be changed to your actual camera later
+#     ffmpeg:
+#       inputs:
+#         - path: rtsp://127.0.0.1:8554/cam_la_poarta?video=copy&audio=aac
+#           roles: 
+#             - record
+
+#         - path: rtsp://127.0.0.1:8554/cam_la_poarta_sub?video=copy
+#           # input_args: preset-rtsp-restream
+#           roles:
+#             - detect
+
+#     motion:
+#       mask: 0.007,0.931,0.25,0.932,0.251,0.971,0.007,0.974
+
+#   la_gard: # <--- this will be changed to your actual camera later
+#     ffmpeg:
+#       inputs:
+#         - path: rtsp://127.0.0.1:8554/cam_la_gard?video=copy&audio=aac
+#           roles: 
+#             - record
+
+#         - path: rtsp://127.0.0.1:8554/cam_la_gard_sub?video=copy
+#           # input_args: preset-rtsp-restream
+#           roles:
+#             - detect
+#     motion:
+#       mask: 0.752,0.015,0.993,0.011,0.993,0.054,0.75,0.054
+
+cameras:
+  la_poarta: # <--- this will be changed to your actual camera later
+    ffmpeg:
+      inputs:
+
+        - path: rtsp://admin:123456@192.168.100.49:554/stream1
+        # - path: rtsp://admin:123456@192.168.100.49:554/cam/realmonitor?channel=1&subtype=0
+        # - path: rtsp://192.168.100.49:554/stream1 #3200x1800
+          # input_args: preset-rtsp-restream
+          roles:
+            - record
+
+        - path: rtsp://admin:123456@192.168.100.49:554/stream0
+          # input_args: preset-rtsp-restream
+          roles:
+            - detect
+
+
+    motion:
+      mask: 0.007,0.931,0.25,0.932,0.251,0.971,0.007,0.974
+    # live:
+    #   streams: # <--- Multiple streams for Frigate 0.16 and later
+    #     Main Stream: cam_la_gard # <--- Specify a "friendly name" followed by the go2rtc stream name
+
+  la_gard: # <--- this will be changed to your actual camera later
+    ffmpeg:
+      inputs:
+        - path: rtsp://admin:123456@192.168.100.15:554/stream1
+        # - path: rtsp://admin:123456@192.168.100.15:554/cam/realmonitor?channel=1&subtype=0
+        # - path: rtsp://192.168.100.15:554/stream1 #3200x1800
+          # input_args: preset-rtsp-restream
+          roles:
+            - record
+
+        - path: rtsp://admin:123456@192.168.100.15:554/stream0
+          # input_args: preset-rtsp-restream
+          roles:
+            - detect
+    motion:
+      mask: 0.752,0.015,0.993,0.011,0.993,0.054,0.75,0.054
+
+    # live:
+    #   streams: # <--- Multiple streams for Frigate 0.16 and later
+    #     # Main Stream: cam_la_gard 
+    #     Special Stream: cam_la_poarta # <--- Specify a "friendly name" followed by the go2rtc stream name
+    #     # Sub Stream: test_cam_sub
+    objects:
+      mask: 0.829,0.234,0.938,0.318,0.897,0.586,0.75,0.428
+version: 0.17-0

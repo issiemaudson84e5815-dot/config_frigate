@@ -1,0 +1,30 @@
+#    <a href='https%3A//github.com/community-scripts/ProxmoxVE/issues' target='_blan>
+#  </span>
+#</div>
+arch: amd64
+cores: 4
+features: nesting=1
+hostname: docker
+memory: 2048
+net0: name=eth0,bridge=vmbr0,gw=192.168.100.1,hwaddr=BC:24:11:10:A7:CF,ip=192.168.10>
+onboot: 1
+ostype: debian
+rootfs: local-lvm:vm-100-disk-0,size=100G
+swap: 512
+tags: community-script;docker
+timezone: Europe/Chisinau
+lxc.cgroup2.devices.allow: a
+lxc.cap.drop:
+lxc.cgroup2.devices.allow: c 188:* rwm
+lxc.cgroup2.devices.allow: c 189:* rwm
+lxc.cgroup2.devices.allow: c 226:0 rwm #igpu
+lxc.cgroup2.devices.allow: c 226:128 rwm #igpu
+lxc.cgroup2.devices.allow: c 29:0 rwm #coral
+lxc.mount.entry: /dev/serial/by-id  dev/serial/by-id  none bind,optional,create=dir
+lxc.mount.entry: /dev/ttyUSB0       dev/ttyUSB0       none bind,optional,create=file
+lxc.mount.entry: /dev/ttyUSB1       dev/ttyUSB1       none bind,optional,create=file
+lxc.mount.entry: /dev/ttyACM0       dev/ttyACM0       none bind,optional,create=file
+lxc.mount.entry: /dev/ttyACM1       dev/ttyACM1       none bind,optional,create=file
+lxc.mount.entry: /dev/apex_0 dev/apex_0 none bind,optional,create=file
+lxc.mount.entry: /dev/dri/renderD128 dev/dri/renderD128 none bind,optional,create=file
+lxc.mount.auto: cgroup:rw
